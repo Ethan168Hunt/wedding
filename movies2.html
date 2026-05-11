@@ -1,0 +1,218 @@
+
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>RxC</title>
+
+  <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+  <!-- FLECHAS -->
+
+  <button id="prev" class="arrow left">
+    &#10094;
+  </button>
+
+  <button id="next" class="arrow right">
+    &#10095;
+  </button>
+
+  <!-- SLIDER -->
+
+  <div class="slider">
+
+    <!-- SLIDE 1 -->
+
+    <section class="slide">
+
+      <div class="bg portada"></div>
+
+    </section>
+
+    <!-- SLIDE 2 -->
+
+    <section class="slide">
+
+      <div class="bg contraportada"></div>
+
+    </section>
+
+    <!-- SLIDE 3 -->
+
+    <section class="slide">
+
+      <div class="video-container">
+
+        <video
+          muted
+          loop
+          playsinline
+          id="background-video"
+        >
+
+          <source
+            src="images/mapa hacienda.mp4"
+            type="video/mp4"
+          >
+
+          Tu navegador no soporta vídeo.
+
+        </video>
+
+      </div>
+
+    </section>
+
+    <!-- SLIDE 4 -->
+
+    <section class="slide">
+
+      <div class="map-slide">
+
+        <h1>Cómo llegar</h1>
+
+        <iframe
+          class="map-frame"
+          src="https://www.openstreetmap.org/export/embed.html?bbox=-6.015243214378954%2C37.47420808680592%2C-6.003243214378954%2C37.48020808680592&layer=mapnik&marker=37.47720808680592%2C-6.009243214378954"
+          loading="lazy">
+        </iframe>
+
+        <a
+          class="maps-btn"
+          href="https://maps.app.goo.gl/MRDzAdeva2xCiHER9"
+          target="_blank"
+        >
+
+          Abrir en Google Maps
+
+        </a>
+
+      </div>
+
+    </section>
+
+  </div>
+
+  <script>
+
+    const slider =
+      document.querySelector('.slider');
+
+    const slides =
+      document.querySelectorAll('.slide');
+
+    const nextBtn =
+      document.getElementById('next');
+
+    const prevBtn =
+      document.getElementById('prev');
+
+    const video =
+      document.getElementById('background-video');
+
+    let currentSlide = 0;
+
+    function updateSlider(){
+
+      slider.style.transform =
+        `translateX(-${currentSlide * 100}vw)`;
+
+      // controlar vídeo
+
+      if(currentSlide === 2){
+
+        video.play();
+
+      }else{
+
+        video.pause();
+
+      }
+
+    }
+
+    // ===== DERECHA =====
+
+    nextBtn.addEventListener('click', () => {
+
+      if(currentSlide < slides.length - 1){
+
+        currentSlide++;
+
+        updateSlider();
+
+      }
+
+    });
+
+    // ===== IZQUIERDA =====
+
+    prevBtn.addEventListener('click', () => {
+
+      if(currentSlide > 0){
+
+        currentSlide--;
+
+        updateSlider();
+
+      }
+
+    });
+
+    updateSlider();
+
+    const arrows = document.querySelectorAll('.arrow');
+
+let hideTimeout;
+
+// mostrar flechas
+function showArrows(){
+  arrows.forEach(a => a.style.opacity = "1");
+}
+
+// ocultar flechas
+function hideArrows(){
+  arrows.forEach(a => a.style.opacity = "0");
+}
+
+// reset del timer
+function resetTimer(){
+
+  showArrows();
+
+  clearTimeout(hideTimeout);
+
+  hideTimeout = setTimeout(() => {
+    hideArrows();
+  }, 2500); // 2.5 segundos
+
+}
+
+// eventos de interacción
+document.addEventListener('mousemove', resetTimer);
+document.addEventListener('touchstart', resetTimer);
+document.addEventListener('click', resetTimer);
+
+// inicial
+resetTimer();
+
+  </script>
+
+</body>
+
+</html>
+```
